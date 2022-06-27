@@ -1,1 +1,1 @@
-# holographic-memory
+#[ModKit Wiki](../../wiki)
