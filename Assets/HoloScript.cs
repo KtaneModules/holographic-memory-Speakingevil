@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class HoloScript : MonoBehaviour {
@@ -237,6 +238,19 @@ public class HoloScript : MonoBehaviour {
             a += Time.deltaTime * e;
             a %= 360;
             yield return null;
+        }
+    }
+
+    //twitch plays
+    #pragma warning disable 414
+    private readonly string TwitchHelpMessage = @"!{0} tilt <direction/angle> [Tilts the module in the specified direction (up, left, etc.) or angle (in degrees from up direction)] | !{0} <A-D><1-4> [Presses the tile at the specified coordinate] | To press a tile while tilting the module append the press command to a tilt command";
+    #pragma warning restore 414
+    private IEnumerator ProcessTwitchCommand(string command)
+    {
+        if (Regex.IsMatch(command, @"^\s*[A-D][1-4]\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
+        {
+            yield return null;
+            buttons["1234".IndexOf(command[1]) * 4 + "ABCD".IndexOf(command.ToUpperInvariant()[0])].OnInteract();
         }
     }
 }
